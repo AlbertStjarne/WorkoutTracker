@@ -1,11 +1,15 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
+const connectDB = require('./config/db');
 
 // load env vars config file
 dotenv.config({ path: './config/config.env' });
 
 const app = express();
+
+// Connect Database
+connectDB();
 
 app.get('/', (req, res) => res.json({ msg: 'Welcome to the everyrep API' }));
 
