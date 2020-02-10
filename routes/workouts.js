@@ -67,8 +67,40 @@ router.post(
 // @route   PUT api/workouts/:id
 // @desc    Update workout
 // @access  Private
-router.put('/:id', (req, res) => {
-  res.send('Update workout');
+router.put('/:id', auth, async (req, res) => {
+  const { description, type } = req.body;
+
+  // build workout object
+  const workoutFields = {};
+  if (description) workoutFields.description = description;
+  if (type) workoutFields.type = type;
+
+  try {
+    let workout = await Workout.findById(req.params.id);
+
+    if (!workout) return res.status(404).json({ msg: 'Workout not found' });
+
+    // make sure user owns workout
+    if (workout.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'Not Authorized' });
+    }
+
+    // update workout
+    workout = await Workout.findByIdAndUpdate(
+      req.params.id,
+      { $set: workoutFields },
+      { new: true }
+    );
+    // return workout to client
+    res.json(workout);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+
+  try {
+    let workout = await Workout.findById();
+  } catch (err) {}
 });
 
 // @route   DELETE api/workouts/:id
