@@ -25,9 +25,44 @@ router.get('/', auth, async (req, res) => {
 // @route   POST api/workouts
 // @desc    Add new workout
 // @access  Private
-router.post('/', (req, res) => {
-  res.send('Add workout');
-});
+router.post(
+  '/',
+  [
+    auth,
+    [
+      check('description')
+        .not()
+        .isEmpty(),
+      check('type')
+        .not()
+        .isEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { description, type } = req.body;
+
+    try {
+      const newWorkout = new Workout({
+        description,
+        type,
+        user: req.user.id,
+      });
+
+      // save workout to db
+      const workout = await newWorkout.save();
+      // return workout to client
+      res.json(workout);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
 
 // @route   PUT api/workouts/:id
 // @desc    Update workout
