@@ -122,7 +122,6 @@ router.delete('/:id', auth, async (req, res) => {
     // return message after delete
     res.json({ msg: 'Workout removed' });
   } catch (err) {
-    console.error(err.message);
     res.status(500).send('Server Error');
   }
 });

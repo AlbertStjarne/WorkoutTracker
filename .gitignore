@@ -1,3 +1,11 @@
 node_modules
+
+/client/build
+
 .DS_store
+
 config/config.env
+
+npm-debug.log*
+yarn-debyg.log*
+yarn-error.log*
