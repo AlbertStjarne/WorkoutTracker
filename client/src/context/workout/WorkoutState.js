@@ -12,21 +12,25 @@ const WorkoutState = props => {
         id: 1,
         description: 'Wednesday WOD',
         type: 'Strength',
+        date: '2020-02-13',
       },
       {
         id: 2,
         description: 'Rowing',
         type: 'Conditioning',
+        date: '2020-02-13',
       },
       {
         id: 3,
         description: 'Thursday WOD',
         type: 'Strength',
+        date: '2020-02-13',
       },
       {
         id: 4,
         description: 'Ski Erg 2000m',
         type: 'Conditioning',
+        date: '2020-02-13',
       },
     ],
   };

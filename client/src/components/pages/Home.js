@@ -1,10 +1,13 @@
 import React from 'react';
+import Workouts from '../workouts/Workouts';
 
 const Home = () => {
   return (
-    <div>
-      <h1>Workout Tracker Home</h1>
-      <p className='my-1'>Are you ready to step up your workout game?</p>
+    <div className='grid-2'>
+      <div>Workout Form here</div>
+      <div>
+        <Workouts />
+      </div>
     </div>
   );
 };
