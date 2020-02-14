@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import WorkoutContext from '../../context/workout/workoutContext';
 
 const WorkoutItem = ({ workout }) => {
+  const workoutContext = useContext(WorkoutContext);
+  const { deleteWorkout } = workoutContext;
+
   const { id, description, type, date } = workout;
+
+  const onDelete = () => {
+    deleteWorkout(id);
+  };
+
   return (
     <div className='card bg-light'>
       <h3 className='text-primary text-left'>
@@ -25,7 +34,9 @@ const WorkoutItem = ({ workout }) => {
       </ul>
       <p>
         <button className='btn btn-dark btn-sm'>Edit</button>
-        <button className='btn btn-danger btn-sm'>Delete</button>
+        <button className='btn btn-danger btn-sm' onClick={onDelete}>
+          Delete
+        </button>
       </p>
     </div>
   );

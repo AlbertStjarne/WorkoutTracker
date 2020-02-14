@@ -8,6 +8,13 @@ export default (state, action) => {
         ...state,
         workouts: [...state.workouts, action.payload],
       };
+    case DELETE_WORKOUT:
+      return {
+        ...state,
+        workouts: state.workouts.filter(
+          workout => workout.id !== action.payload
+        ),
+      };
     // default case
     default:
       return state;

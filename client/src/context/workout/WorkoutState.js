@@ -50,6 +50,9 @@ const WorkoutState = props => {
   // Update Workout
 
   // Delete Workout
+  const deleteWorkout = id => {
+    dispatch({ type: DELETE_WORKOUT, payload: id });
+  };
 
   // returning provider that will wrap the entire appl
   return (
@@ -58,6 +61,7 @@ const WorkoutState = props => {
       value={{
         workouts: state.workouts,
         addWorkout,
+        deleteWorkout,
       }}
     >
       {props.children}
