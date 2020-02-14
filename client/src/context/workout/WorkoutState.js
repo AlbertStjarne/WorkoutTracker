@@ -40,10 +40,16 @@ const WorkoutState = props => {
 
   // ACTIONS
   // Add Workout
+  const addWorkout = workout => {
+    // using uuid for id before connecting to api
+    workout.id = uuid.v4();
+    // dispatching to reducer
+    dispatch({ type: ADD_WORKOUT, payload: workout });
+  };
 
   // Update Workout
 
-  // Delete Contact
+  // Delete Workout
 
   // returning provider that will wrap the entire appl
   return (
@@ -51,6 +57,7 @@ const WorkoutState = props => {
       // value = what should be accessible from other components
       value={{
         workouts: state.workouts,
+        addWorkout,
       }}
     >
       {props.children}
