@@ -1,8 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import WorkoutContext from '../../context/workout/workoutContext';
 
 const WorkoutForm = () => {
   const workoutContext = useContext(WorkoutContext);
+
+  const { addWorkout, updateWorkout, clearCurrent, current } = workoutContext;
+
+  // setting form to current if current exist
+  useEffect(() => {
+    if (current !== null) {
+      setWorkout(current);
+    } else {
+      setWorkout({
+        description: '',
+        type: '',
+      });
+    }
+    // dependencies, only to trigger when workoutContext or current is changed
+  }, [workoutContext, current]);
 
   // setting workout state to an object
   const [workout, setWorkout] = useState({
@@ -20,18 +35,25 @@ const WorkoutForm = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    // calling addWorkout in workoutContext with the workout state object
-    workoutContext.addWorkout(workout);
+    if (current == null) {
+      // calling addWorkout in workoutContext with the workout state object
+      addWorkout(workout);
+    } else {
+      updateWorkout(workout);
+    }
     // clearing form
-    setWorkout({
-      description: '',
-      type: '',
-    });
+    clearAll();
+  };
+
+  const clearAll = () => {
+    clearCurrent();
   };
 
   return (
     <form onSubmit={onSubmit}>
-      <h2 className='text-primary'>Add Workout</h2>
+      <h2 className='text-primary'>
+        {current ? 'Edit Workout' : 'Add Workout'}
+      </h2>
       <input
         type='text'
         placeholder='Description'
@@ -47,8 +69,19 @@ const WorkoutForm = () => {
         onChange={onChange}
       />
       <div>
-        <input type='submit' value='Add Workout' className='btn btn-primary' />
+        <input
+          type='submit'
+          value={current ? 'Update Workout' : 'Add Workout'}
+          className='btn btn-primary'
+        />
       </div>
+      {current && (
+        <div>
+          <button className='btn btn-light btn-block' onClick={clearAll}>
+            Clear
+          </button>
+        </div>
+      )}
     </form>
   );
 };

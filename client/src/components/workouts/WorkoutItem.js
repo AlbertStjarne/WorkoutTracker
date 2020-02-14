@@ -4,12 +4,14 @@ import WorkoutContext from '../../context/workout/workoutContext';
 
 const WorkoutItem = ({ workout }) => {
   const workoutContext = useContext(WorkoutContext);
-  const { deleteWorkout } = workoutContext;
+  const { deleteWorkout, setCurrent, clearCurrent } = workoutContext;
 
   const { id, description, type, date } = workout;
 
   const onDelete = () => {
     deleteWorkout(id);
+    // setting current back to null if delete is clicked
+    clearCurrent();
   };
 
   return (
@@ -33,7 +35,12 @@ const WorkoutItem = ({ workout }) => {
         )}
       </ul>
       <p>
-        <button className='btn btn-dark btn-sm'>Edit</button>
+        <button
+          className='btn btn-dark btn-sm'
+          onClick={() => setCurrent(workout)}
+        >
+          Edit
+        </button>
         <button className='btn btn-danger btn-sm' onClick={onDelete}>
           Delete
         </button>

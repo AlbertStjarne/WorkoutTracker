@@ -2,7 +2,13 @@ import React, { useReducer } from 'react';
 import uuid from 'uuid';
 import workoutContext from './workoutContext';
 import workoutReducer from './workoutReducer';
-import { ADD_WORKOUT, UPDATE_WORKOUT, DELETE_WORKOUT } from '../types';
+import {
+  ADD_WORKOUT,
+  UPDATE_WORKOUT,
+  DELETE_WORKOUT,
+  SET_CURRENT,
+  CLEAR_CURRENT,
+} from '../types';
 
 const WorkoutState = props => {
   // initial state, with dummy data for now, later ''
@@ -33,6 +39,8 @@ const WorkoutState = props => {
         date: '2020-02-13',
       },
     ],
+    // setting current when clicking edit
+    current: null,
   };
 
   // pulling out state and dispatch from the reducer, state to access state and dispatch to dispatch to the reducer
@@ -47,7 +55,20 @@ const WorkoutState = props => {
     dispatch({ type: ADD_WORKOUT, payload: workout });
   };
 
+  // Set current workout
+  const setCurrent = workout => {
+    dispatch({ type: SET_CURRENT, payload: workout });
+  };
+
+  // Clear current workout
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT });
+  };
+
   // Update Workout
+  const updateWorkout = workout => {
+    dispatch({ type: UPDATE_WORKOUT, payload: workout });
+  };
 
   // Delete Workout
   const deleteWorkout = id => {
@@ -60,8 +81,12 @@ const WorkoutState = props => {
       // value = what should be accessible from other components
       value={{
         workouts: state.workouts,
+        current: state.current,
         addWorkout,
         deleteWorkout,
+        updateWorkout,
+        setCurrent,
+        clearCurrent,
       }}
     >
       {props.children}

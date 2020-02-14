@@ -1,3 +1,5 @@
 export const ADD_WORKOUT = 'ADD_WORKOUT';
 export const UPDATE_WORKOUT = 'UPDATE_WORKOUT';
 export const DELETE_WORKOUT = 'DELETE_WORKOUT';
+export const SET_CURRENT = 'SET_CURRENT';
+export const CLEAR_CURRENT = 'CLEAR_CURRENT';
