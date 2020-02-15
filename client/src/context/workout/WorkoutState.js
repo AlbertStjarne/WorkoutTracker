@@ -8,6 +8,8 @@ import {
   DELETE_WORKOUT,
   SET_CURRENT,
   CLEAR_CURRENT,
+  FILTER_WORKOUTS,
+  CLEAR_FILTER,
 } from '../types';
 
 const WorkoutState = props => {
@@ -41,6 +43,8 @@ const WorkoutState = props => {
     ],
     // setting current when clicking edit
     current: null,
+    // array of filtered workouts
+    filtered: null,
   };
 
   // pulling out state and dispatch from the reducer, state to access state and dispatch to dispatch to the reducer
@@ -75,6 +79,16 @@ const WorkoutState = props => {
     dispatch({ type: DELETE_WORKOUT, payload: id });
   };
 
+  // Filter workouts
+  const filterWorkouts = text => {
+    dispatch({ type: FILTER_WORKOUTS, payload: text });
+  };
+
+  // Clear filter
+  const clearFilter = () => {
+    dispatch({ type: CLEAR_FILTER });
+  };
+
   // returning provider that will wrap the entire appl
   return (
     <workoutContext.Provider
@@ -82,11 +96,14 @@ const WorkoutState = props => {
       value={{
         workouts: state.workouts,
         current: state.current,
+        filtered: state.filtered,
         addWorkout,
         deleteWorkout,
         updateWorkout,
         setCurrent,
         clearCurrent,
+        filterWorkouts,
+        clearFilter,
       }}
     >
       {props.children}

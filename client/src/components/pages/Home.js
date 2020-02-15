@@ -1,6 +1,7 @@
 import React from 'react';
 import Workouts from '../workouts/Workouts';
 import WorkoutForm from '../workouts/WorkoutForm';
+import WorkoutFilter from '../workouts/WorkoutFilter';
 
 const Home = () => {
   return (
@@ -9,6 +10,7 @@ const Home = () => {
         <WorkoutForm />
       </div>
       <div>
+        <WorkoutFilter />
         <Workouts />
       </div>
     </div>

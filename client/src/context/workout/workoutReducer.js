@@ -4,6 +4,8 @@ import {
   DELETE_WORKOUT,
   SET_CURRENT,
   CLEAR_CURRENT,
+  FILTER_WORKOUTS,
+  CLEAR_FILTER,
 } from '../types';
 
 export default (state, action) => {
@@ -37,6 +39,19 @@ export default (state, action) => {
       return {
         ...state,
         current: null,
+      };
+    case FILTER_WORKOUTS:
+      return {
+        ...state,
+        filtered: state.workouts.filter(workout => {
+          const regex = new RegExp(`${action.payload}`, 'gi');
+          return workout.description.match(regex) || workout.type.match(regex);
+        }),
+      };
+    case CLEAR_FILTER:
+      return {
+        ...state,
+        filtered: null,
       };
     // default case
     default:
