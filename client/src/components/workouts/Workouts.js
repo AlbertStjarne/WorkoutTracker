@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import WorkoutContext from '../../context/workout/workoutContext';
 import WorkoutItem from './WorkoutItem';
 
@@ -13,14 +14,20 @@ const Workouts = () => {
 
   return (
     <Fragment>
-      {/* if filtered is not null then showing filtered, else showing workouts */}
-      {filtered !== null
-        ? filtered.map(workout => (
-            <WorkoutItem key={workout.id} workout={workout} />
-          ))
-        : workouts.map(workout => (
-            <WorkoutItem key={workout.id} workout={workout} />
-          ))}
+      <TransitionGroup>
+        {/* if filtered is not null then showing filtered, else showing workouts */}
+        {filtered !== null
+          ? filtered.map(workout => (
+              <CSSTransition key={workout.id} timeout={500} classNames='item'>
+                <WorkoutItem workout={workout} />
+              </CSSTransition>
+            ))
+          : workouts.map(workout => (
+              <CSSTransition key={workout.id} timeout={500} classNames='item'>
+                <WorkoutItem workout={workout} />
+              </CSSTransition>
+            ))}
+      </TransitionGroup>
     </Fragment>
   );
 };
