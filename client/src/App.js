@@ -4,23 +4,26 @@ import Navbar from './components/layout/Navbar';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
 import WorkoutState from './context/workout/WorkoutState';
+import AuthState from './context/auth/AuthState';
 import './App.css';
 
 const App = () => {
   return (
-    <WorkoutState>
-      <Router>
-        <Fragment>
-          <Navbar />
-          <div className='container'>
-            <Switch>
-              <Route exact path='/' component={Home} />
-              <Route exact path='/about' component={About} />
-            </Switch>
-          </div>
-        </Fragment>
-      </Router>
-    </WorkoutState>
+    <AuthState>
+      <WorkoutState>
+        <Router>
+          <Fragment>
+            <Navbar />
+            <div className='container'>
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route exact path='/about' component={About} />
+              </Switch>
+            </div>
+          </Fragment>
+        </Router>
+      </WorkoutState>
+    </AuthState>
   );
 };
 
